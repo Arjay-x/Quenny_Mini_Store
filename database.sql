@@ -1,0 +1,94 @@
+-- Create Database
+CREATE DATABASE IF NOT EXISTS pos_system;
+USE pos_system;
+
+-- Table 0: Categories
+CREATE TABLE IF NOT EXISTS categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(100) NOT NULL UNIQUE,
+    category_description VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table 1: Items (List of items with price, stocks and category)
+CREATE TABLE IF NOT EXISTS items (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    item_name VARCHAR(255) NOT NULL,
+    item_price DECIMAL(10,2) NOT NULL,
+    item_stocks INT NOT NULL DEFAULT 0,
+    item_image VARCHAR(255) DEFAULT NULL,
+    category_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE RESTRICT
+);
+
+-- Table 2: Users (Login for admin and user)
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table 3: Receipts (Sales transactions)
+CREATE TABLE IF NOT EXISTS receipts (
+    receipt_id INT AUTO_INCREMENT PRIMARY KEY,
+    receipt_date DATE NOT NULL,
+    customer_name VARCHAR(100) NOT NULL,
+    remarks VARCHAR(255) DEFAULT NULL,
+    items_json TEXT NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
+    status ENUM('completed', 'saved') DEFAULT 'completed',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert default admin user (password: admin123)
+INSERT INTO users (username, password, full_name, role) 
+VALUES ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'admin');
+
+-- Insert default user (password: user123)
+INSERT INTO users (username, password, full_name, role) 
+VALUES ('user', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Cashier', 'user');
+
+-- Insert categories
+INSERT INTO categories (category_name, category_description) VALUES
+('All Products', 'Show all products'),
+('Noodles', 'All types of noodles'),
+('Can Foods', 'Canned food products'),
+('Beverages', 'Drinks and beverages'),
+('Bread', 'Bread and bakery items'),
+('Snacks', 'Snack items'),
+('Others', 'Other products');
+
+-- Sample items with categories
+INSERT INTO items (item_name, item_price, item_stocks, item_image, category_id) VALUES
+-- Beverages (category_id: 4)
+('Coke', 25.00, 100, 'coke.png', 4),
+('Pepsi', 25.00, 100, 'pepsi.png', 4),
+('Water', 20.00, 50, 'water.png', 4),
+('Milk', 55.00, 40, 'milk.png', 4),
+
+-- Noodles (category_id: 2)
+('Chicken Noodles', 35.00, 80, 'chicken_noodles.png', 2),
+('Beef Noodles', 40.00, 75, 'beef_noodles.png', 2),
+('Pancit Canton', 30.00, 60, 'pancit_canton.png', 2),
+('Lucky Me Noodles', 15.00, 100, 'lucky_me.png', 2),
+
+-- Can Foods (category_id: 3)
+('Corned Beef', 65.00, 40, 'corned_beef.png', 3),
+('Spam', 85.00, 35, 'spam.png', 3),
+('Sardines', 35.00, 50, 'sardines.png', 3),
+('Tuna', 55.00, 45, 'tuna.png', 3),
+
+-- Bread (category_id: 5)
+('Bread', 45.00, 30, 'bread.png', 5),
+('Pandesal', 2.00, 100, 'pandesal.png', 5),
+('Loaf Bread', 60.00, 25, 'loaf_bread.png', 5),
+
+-- Snacks (category_id: 6)
+('Chips', 30.00, 50, 'chips.png', 6),
+('Cookies', 25.00, 40, 'cookies.png', 6),
+('Chocolate Bar', 20.00, 60, 'chocolate.png', 6);
