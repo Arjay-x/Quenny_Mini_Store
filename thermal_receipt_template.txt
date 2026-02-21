@@ -1,0 +1,114 @@
+<!-- Thermal Printer Receipt Template - Replace the existing template in pos.php with this -->
+
+    <!-- Thermal Printer Receipt Template -->
+    <div id="printable-receipt">
+        <div class="print-header-center">
+            <div class="print-store-name">Queenny Store</div>
+            <div class="print-order-slip">Order Slip</div>
+        </div>
+        
+        <div class="print-info-row">
+            <span class="print-label">Date:</span>
+            <span class="print-value-right" id="print-date"></span>
+        </div>
+        
+        <div class="print-info-row">
+            <span class="print-label">Customer:</span>
+            <span class="print-value-right" id="print-customer"></span>
+        </div>
+        
+        <div class="print-info-row">
+            <span class="print-label">Receipt #:</span>
+            <span class="print-value-right" id="print-receipt-id"></span>
+        </div>
+        
+        <div id="print-remarks-section" style="display:none;">
+            <div class="print-info-row">
+                <span class="print-label">Remarks:</span>
+                <span class="print-value-right" id="print-remarks"></span>
+            </div>
+        </div>
+        
+        <div class="print-line-full"></div>
+        
+        <div class="print-headers">
+            <span class="print-header-price">Price</span>
+            <span class="print-header-qty">Qty</span>
+            <span class="print-header-total">Total</span>
+        </div>
+        
+        <div class="print-line-full"></div>
+        
+        <div id="print-items"></div>
+        
+        <div class="print-line-full"></div>
+        
+        <div class="print-grand-total">
+            <span class="print-total-label">TOTAL:</span>
+            <span class="print-total-value" id="print-total-amount"></span>
+        </div>
+        
+        <div class="print-line-full"></div>
+        
+        <div class="print-footer">
+            <div class="print-generated-label">Generated:</div>
+            <div class="print-generated-datetime">
+                <span id="print-generated-date"></span> 
+                <span id="print-generated-time"></span>
+            </div>
+        </div>
+    </div>
+
+<!-- Add these CSS styles to your pos.php -->
+
+            /* Thermal Printer Styles */
+            #printable-receipt { 
+                display: none; 
+                font-family: 'Courier New', monospace; 
+                font-size: 12px; 
+                width: 58mm; 
+                padding: 5px;
+            }
+            
+            @media print {
+                body * { visibility: hidden; }
+                #printable-receipt, #printable-receipt * { visibility: visible; }
+                #printable-receipt {
+                    display: block !important;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 58mm;
+                }
+            }
+            
+            .print-header-center { text-align: center; margin-bottom: 10px; }
+            .print-store-name { font-size: 16px; font-weight: bold; }
+            .print-order-slip { font-size: 14px; margin-top: 5px; }
+            
+            .print-info-row { display: flex; justify-content: space-between; margin: 3px 0; }
+            .print-label { font-weight: bold; }
+            .print-value-right { text-align: right; }
+            
+            .print-line-full { border-bottom: 1px dashed #000; margin: 8px 0; }
+            
+            .print-headers { display: flex; justify-content: space-between; font-weight: bold; border-bottom: 1px solid #000; padding-bottom: 5px; margin-bottom: 8px; }
+            .print-header-price { text-align: left; }
+            .print-header-qty { text-align: center; }
+            .print-header-total { text-align: right; }
+            
+            .print-item { display: flex; justify-content: space-between; margin: 3px 0; }
+            .print-item-name { text-align: left; flex: 1; }
+            .print-item-price { text-align: left; width: 50px; }
+            .print-item-qty { text-align: center; width: 30px; }
+            .print-item-total { text-align: right; width: 50px; }
+            
+            .print-grand-total { display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; }
+            .print-total-label { font-weight: bold; }
+            .print-total-value { font-weight: bold; }
+            
+            .print-footer { text-align: center; margin-top: 10px; }
+            .print-generated-label { font-weight: bold; }
+            .print-generated-datetime { font-size: 11px; }
+            
+            .print-remarks-row { margin: 5px 0; }

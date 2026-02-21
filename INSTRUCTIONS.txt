@@ -1,0 +1,28 @@
+===========================================
+QUENNY STORE POS - EZYRO HOSTING
+===========================================
+
+GOOGLE ADSENSE ADDED:
+-------------------
+Google Adsense script has been added to these pages:
+- login.php
+- pos.php
+- dashboard.php
+
+The script loads on every page:
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2862802439514164"
+     crossorigin="anonymous"></script>
+
+DATABASE CONFIGURATION (db.php):
+-------------------------------
+Host: sql308.ezyro.com
+Username: ezyro_41209625  
+Password: 65ymcpx9
+Database: ezyro_41209625_rnkmdatabase
+
+DEFAULT LOGIN CREDENTIALS:
+-------------------------
+Admin: admin / admin123
+User: user / user123
+
+Upload all files to your ezyro hosting!
